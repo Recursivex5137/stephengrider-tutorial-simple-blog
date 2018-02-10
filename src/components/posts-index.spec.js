@@ -26,27 +26,24 @@ describe('PostIndex tests', () => {
     },
     fetchPosts: fetchPosts
   };
-  const htmlToTestAgainst = 
-  (<div>
-    <h3>Posts</h3>
+  const htmlToTestAgainst = ( 
     <ul className="list-group">
       <li className="list-group-item">{props.posts["1"].title}</li>
       <li className="list-group-item">{props.posts["2"].title}</li>
-    </ul>
-  </div>);
+    </ul>);
+
   it('Should render PostIndex component.', () => {
     const postIndex = shallow(ShallowMock(<PostsIndex />, props));
     expect(postIndex).toBeTruthy();
   });
   it('Should render htmlToTestAgainst', () => {
     const postIndex = shallow(<PostsIndex {...props}/>);
-    expect(postIndex.contains(<h3>Posts</h3>)).toBeTruthy();
-    expect(postIndex.contains(
-      <ul className="list-group">
-      </ul>
-    )).toBeTruthy();
-    expect(props.posts["1"].title).toEqual('Hi!');
-    
-    // can't properly test li tags within the ul 
+    expect(postIndex.contains(htmlToTestAgainst)).toBeTruthy();
+    /* can't properly test li tags within the ul <- That was a mistake in the actual code
+      because I had implemented the component wrongly. I had forgotten to return the _.map 
+      on line 13 of posts-index.js therefore I didn't have any li elements 
+      and I forgot to hook up mapStateToProps. Just commenting about this as this is 
+      the first time a test has helped or would have had I been more observant.
+    */
   });
 });
